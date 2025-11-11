@@ -1,4 +1,4 @@
-function LinkedList(){
+export function LinkedList(){
 let head = null;
 
     function append(value){
@@ -125,7 +125,51 @@ let head = null;
         return result;
     }
 
-    return {
+    function insertAt(value, index){
+        if (index < 0){
+            return
+        } 
+        if (index === 0){
+            prepend(value);
+            return;
+        }
+        if (index >= size()){
+            append(value);
+            return;
+        }
+        let current = head;
+        let count = 0;
+        while(count < index - 1){
+            current = current.next;
+            count++;
+        }   let newNode = createNode(value);
+            newNode.next = current.next;
+            current.next = newNode;
+    }
+    
+    function removeAt(index){
+        if (index < 0){
+            return
+        } 
+        if (head === null){
+            return
+        } 
+        if (index === 0){
+            head = head.next;
+            return
+        }
+        let current = head;
+        let count = 0;
+        while(count < index - 1 && current.next !== null){
+            current = current.next;
+            count++;
+            }
+        if(current.next !== null){
+        current.next = current.next.next;
+        }
+    } 
+
+return {
   append,
   prepend,
   size,
@@ -135,9 +179,12 @@ let head = null;
   pop,
   contains,
   find,
-  toString
+  toString,
+  insertAt,
+  removeAt
 };
 }
+
 
 function createNode(value){
     return{
@@ -146,13 +193,3 @@ function createNode(value){
     };
 }
 
-const list = LinkedList();
-
-list.append("dog");
-list.append("cat");
-list.append("parrot");
-list.append("hamster");
-list.append("snake");
-list.append("turtle");
-
-console.log(list.toString());
